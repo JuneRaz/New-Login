@@ -12,6 +12,7 @@ import Test from '../Test';
 
 export const MarkerContext = React.createContext();
 export const LevelContext = React.createContext();
+
 const markerIcons = {
   Normal: normalIcon, // Green
   Low: lowIcon, // Yellow
@@ -67,7 +68,7 @@ export const MapContainer = (props) => {
             }}
             />
           ))}
-        <Test lat={lattitude} lng= {longitude}/>
+                <Test lat={lattitude} lng= {longitude} setLat={SetLattitude} setLng={SetLongitude}/>
            <Marker
             position={{ lat: lattitude, lng: longitude }}
             icon={{

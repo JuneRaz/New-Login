@@ -9,7 +9,8 @@ import { styled } from '@mui/system';
 import { useTheme } from '@mui/material/styles';
 
 
-const Test = ({lat, lng}) => {
+const Test = ({lat, lng, setLat, setLng}) => {
+
   const theme =useTheme();
   const [anchor, setAnchor] = React.useState(null);
   
@@ -51,6 +52,9 @@ const Test = ({lat, lng}) => {
           console.error(error);
           res.error('An error occurred. Please try again.');
         });
+
+        setLat(null);
+        setLng(null);
     };
   
     return (

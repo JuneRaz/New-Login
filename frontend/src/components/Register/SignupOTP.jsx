@@ -44,9 +44,6 @@ const RegistrationOtp = () => {
     axios.post(`http://localhost:7000/sendotp`, formData)
       .then(response => {
         toast.success('OTP sent successfully! Redirecting...');
-        setTimeout(() => {
-          nav('/', { replace: true });
-        }, 2000);
       })
       .catch(error => {
         console.error(error);
