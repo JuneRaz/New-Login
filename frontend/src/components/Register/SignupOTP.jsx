@@ -24,8 +24,7 @@ const validateOtp = async (otp, form, nav) => {
 const RegistrationOtp = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const formData = '';
-  //const formData = location.state.formData;
+  const formData = location.state.formData;
 
   const [otp, setOtp] = useState('')
 
@@ -34,8 +33,25 @@ const RegistrationOtp = () => {
   }
 
   const [showTimer, setShowTimer] = useState(true);
-  const handleClick = (status) => {
+
+  // TODO: just call the handleFormSubmit in ./Signup
+  const handleResend = (status) => {
     setShowTimer(status);
+    if (formData.password !== formData.passwordConfirm) {
+      toast.error('Passwords do not match');
+      return;
+    }
+    axios.post(`http://localhost:7000/sendotp`, formData)
+      .then(response => {
+        toast.success('OTP sent successfully! Redirecting...');
+        setTimeout(() => {
+          nav('/', { replace: true });
+        }, 2000);
+      })
+      .catch(error => {
+        console.error(error);
+        toast.error('An error occurred. Please try again.');
+      });
   };
 
   useEffect(() => {
@@ -44,7 +60,7 @@ const RegistrationOtp = () => {
 
   const paperStyle = {
     padding: 20,
-    height: 400,
+    height: 250,
     width: 400,
     margin: '20px auto',
     display: 'flex',
@@ -58,10 +74,13 @@ const RegistrationOtp = () => {
       <Paper elevation={10} style={paperStyle}>
         <div>
           <h5>We've sent a One-Time Password to the contact number you've provided</h5>
-          
-          <MuiOtpInput value={otp} onChange={handleChange} length={6} onComplete={() => validateOtp(otp, formData, navigate)}/>
+          {showTimer && <OtpTimer seconds={10} resend={() => handleResend(true)} text="Resending OTP in ..." />}
           <br />
-          {showTimer && <OtpTimer seconds={10} resend={() => handleClick(true)} text="Resending OTP in ..." />}
+          <MuiOtpInput value={otp} onChange={handleChange} length={6}/>
+            <br />
+            <Grid container justifyContent="center">
+            <Button onClick={() =>validateOtp(otp, formData, navigate)}sx={{backgroundColor: "#00ccff"}} variant="contained">Submit</Button>
+            </Grid>
           
         </div>
       </Paper>
@@ -73,7 +92,6 @@ const RegistrationOtp = () => {
 export default RegistrationOtp;
 
 /*
-
 <Button
             style={{ textAlign: 'center' }}
             color="secondary"
