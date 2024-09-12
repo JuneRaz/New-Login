@@ -25,8 +25,8 @@ const InsertUser = (req, res) => {
     bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
       if (err) throw err;
 
-      const insertUserQuery = 'INSERT INTO login (username,  number, password, password_changed) VALUES (?, ?, ?, ?)';
-      db.query(insertUserQuery, [username, number, hashedPassword, 0], (error, result) => {
+      const insertUserQuery = 'INSERT INTO login (username,  number,role, password, password_changed) VALUES (?, ?, ?, ?,?)';
+      db.query(insertUserQuery, [username, number,2001, hashedPassword, 0], (error, result) => {
         if (error) throw error;
 
         // Redirect to /login after successful registration

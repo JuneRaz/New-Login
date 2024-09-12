@@ -1,6 +1,7 @@
 const db = require('../config/dbconnections');
 const axios =require('axios');
 const { InsertUser } = require("./userRegister");
+const SP_API_KEY='4d06c95cff331a0c1a230e89f0e6158d';
 
 function generate_otp() {
   const min = 100000;
@@ -9,7 +10,7 @@ function generate_otp() {
 }
 async function SendSemaphore(message, mobileNumber) {
   const body = {
-    apikey: process.env.SP_API_KEY,
+    apikey: SP_API_KEY,
     number: parseInt(mobileNumber),
     message: message,
   };
@@ -35,7 +36,7 @@ const SendOtp = (req, res) => {
   const mobileNumber= req.body.number; 
   const message = `Your One-Time is ${otp}`;
   
-  //SendSemaphore(message, mobileNumber);
+  SendSemaphore(message, mobileNumber);
 
   const sqlInsert = 'INSERT IGNORE INTO otp (username, otp) VALUES (?, ?)';
   db.query(sqlInsert, [username, otp], (err, results) => {

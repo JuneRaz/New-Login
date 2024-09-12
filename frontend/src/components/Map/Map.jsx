@@ -37,9 +37,11 @@ export const MapContainer = (props) => {
   
     return (
       <Map 
+      style={mapStyles}
       google={props.google}
       zoom={14}
         initialCenter={initposition}
+        
         >   
         <LevelContext.Provider value= {[poptext, setPoptext]}>
           <MarkerContext.Provider value= {[markers, setMarkers]}>

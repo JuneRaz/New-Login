@@ -45,21 +45,38 @@ function Home() {
                             Flood Monitoring System
                         </Button>
                     </Typography>
-                    <Link to='/Home'>
-                        <Button color='inherit' style={{ color: 'black' }}>Home</Button>
-                    </Link>
-                    <Link to='/map'>
-                        <Button color='inherit' style={{ color: 'black' }}>Map</Button>
-                    </Link>
-                    <Link to='/login'>
-                        <Button color='inherit' style={{ color: 'black' }}>Login</Button>
-                    </Link>
-                    <Link to='/signup'>
-                        <Button color='inherit' style={{ color: 'black' }}>Signup</Button>
-                    </Link>
-                    <Link to='/test'>
-                        <Button color='inherit' style={{ color: 'black' }}>Test</Button>
-                    </Link>
+
+                    {/* Conditional rendering based on authentication status */}
+                    {auth?.user ? (
+                        // Show "Home" and "Map" when user is logged in
+                        <>
+                            <Link to='/home'>
+                                <Button color='inherit' style={{ color: 'black' }}>Home</Button>
+                            </Link>
+                            <Link to='/map'>
+                                <Button color='inherit' style={{ color: 'black' }}>Map</Button>
+                            </Link>
+                        </>
+                    ) : (
+                        // Show "Login", "Signup", and "OTP" when user is not logged in
+                        <>
+                            <Link to='/login'>
+                                <Button color='inherit' style={{ color: 'black' }}>Login</Button>
+                            </Link>
+                            <Link to='/signup'>
+                                <Button color='inherit' style={{ color: 'black' }}>Signup</Button>
+                            </Link>
+                            <Link to='/map'>
+                                <Button color='inherit' style={{ color: 'black' }}>Map</Button>
+                            </Link>
+                            <Link to='/home'>
+                                <Button color='inherit' style={{ color: 'black' }}>Home</Button>
+                            </Link>
+                            <Link to='/otp'>
+                                <Button color='inherit' style={{ color: 'black' }}>OTP</Button>
+                            </Link>
+                        </>
+                    )}
                 </Toolbar>
             </AppBar>
         </Box>
