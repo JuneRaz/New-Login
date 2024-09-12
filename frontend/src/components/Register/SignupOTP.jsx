@@ -6,6 +6,7 @@ import OtpTimer from 'otp-timer';
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { MuiOtpInput } from 'mui-one-time-password-input'
 
 const validateOtp = async (otp, form, nav) => {
   try {
@@ -23,7 +24,14 @@ const validateOtp = async (otp, form, nav) => {
 const RegistrationOtp = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const formData = location.state.formData;
+  const formData = '';
+  //const formData = location.state.formData;
+
+  const [otp, setOtp] = useState('')
+
+  const handleChange = (newValue) => {
+    setOtp(newValue)
+  }
 
   const [showTimer, setShowTimer] = useState(true);
   const handleClick = (status) => {
@@ -36,8 +44,8 @@ const RegistrationOtp = () => {
 
   const paperStyle = {
     padding: 20,
-    height: 100,
-    width: 300,
+    height: 400,
+    width: 400,
     margin: '20px auto',
     display: 'flex',
     justifyContent: 'center',
@@ -50,21 +58,11 @@ const RegistrationOtp = () => {
       <Paper elevation={10} style={paperStyle}>
         <div>
           <h5>We've sent a One-Time Password to the contact number you've provided</h5>
-          <input
-            type="text"
-            id="otpInput"
-            placeholder="Enter the OTP Here..."
-            size={35}
-          />
+          
+          <MuiOtpInput value={otp} onChange={handleChange} length={6} onComplete={() => validateOtp(otp, formData, navigate)}/>
           <br />
           {showTimer && <OtpTimer seconds={10} resend={() => handleClick(true)} text="Resending OTP in ..." />}
-          <Button
-            style={{ textAlign: 'center' }}
-            color="secondary"
-            onClick={() => validateOtp(document.getElementById('otpInput').value, formData, navigate)}
-          >
-            Submit
-          </Button>
+          
         </div>
       </Paper>
       <ToastContainer />
@@ -73,3 +71,14 @@ const RegistrationOtp = () => {
 };
 
 export default RegistrationOtp;
+
+/*
+
+<Button
+            style={{ textAlign: 'center' }}
+            color="secondary"
+            onClick={() => validateOtp(otp, formData, navigate)}
+          >
+            Submit
+          </Button>
+*/

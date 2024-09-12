@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from "react";
 import { useTheme } from '@mui/material/styles';
 import useAuth from '../hooks/useAuth'; // Assuming this is where your authentication hook is
 import useLogout from "../hooks/useLogout"; // Import the useLogout hook
@@ -14,6 +15,19 @@ import AuthContext from "../context/AuthProvider";
 
 
 function Home() {
+    const { setAuth } = useContext(AuthContext);
+    const logout = useLogout(); // Get the logout function from the custom hook
+
+    const handleLogout = async () => {
+        try {
+            await logout(); // Call the logout function to clear backend state
+            setAuth({}); // Clear the authentication state
+            navigate('/'); // Redirect to the LinkPage after logout
+        } catch (err) {
+            console.error('Logout failed', err);
+        }
+    }
+    
     const theme = useTheme();
     const navigate = useNavigate();
     const { auth } = useAuth(); // Get authentication status from useAuth
@@ -56,9 +70,11 @@ function Home() {
                             <Link to='/home'>
                                 <Button color='inherit' style={{ color: 'black' }}>Home</Button>
                             </Link>
-                           
-                                <button onClick={handleLogout}>Sign Out</button>
-                           
+                            <Button color='inherit' style={{ color: 'black' }} onClick={handleLogout}>
+                                Logout
+                            </Button>
+                            
+
                         </>
                     ) : (
                         // Show "Login", "Signup", and "OTP" when user is not logged in
@@ -72,6 +88,7 @@ function Home() {
                             <Link to='/home'>
                                 <Button color='inherit' style={{ color: 'black' }}>Map</Button>
                             </Link>
+                            
                         </>
                     )}
                 </Toolbar>
@@ -81,3 +98,4 @@ function Home() {
 }
 
 export default Home;
+//<button onClick={handleLogout}>Sign Out</button>
