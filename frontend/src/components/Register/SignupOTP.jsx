@@ -12,7 +12,7 @@ const validateOtp = async (otp, form, nav) => {
     const response = await axios.post(`http://localhost:7000/validateotp/${otp}`, form);
     toast.success('OTP verified successfully! Redirecting to login...');
     setTimeout(() => {
-      nav('/login', { replace: true });
+      nav('/', { replace: true });
     }, 2000); // Adjust the delay time as necessary
   } catch (error) {
     toast.error('OTP verification failed. Please try again.');

@@ -9,6 +9,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import useAuth from '../hooks/useAuth'; // Assuming this is where your authentication hook is
+import useLogout from "../hooks/useLogout"; // Import the useLogout hook
+import AuthContext from "../context/AuthProvider";
+
 
 function Home() {
     const theme = useTheme();
@@ -53,27 +56,21 @@ function Home() {
                             <Link to='/home'>
                                 <Button color='inherit' style={{ color: 'black' }}>Home</Button>
                             </Link>
-                            <Link to='/map'>
-                                <Button color='inherit' style={{ color: 'black' }}>Map</Button>
-                            </Link>
+                           
+                                <button onClick={handleLogout}>Sign Out</button>
+                           
                         </>
                     ) : (
                         // Show "Login", "Signup", and "OTP" when user is not logged in
                         <>
-                            <Link to='/login'>
+                            <Link to='/'>
                                 <Button color='inherit' style={{ color: 'black' }}>Login</Button>
                             </Link>
                             <Link to='/signup'>
                                 <Button color='inherit' style={{ color: 'black' }}>Signup</Button>
                             </Link>
-                            <Link to='/map'>
-                                <Button color='inherit' style={{ color: 'black' }}>Map</Button>
-                            </Link>
                             <Link to='/home'>
-                                <Button color='inherit' style={{ color: 'black' }}>Home</Button>
-                            </Link>
-                            <Link to='/otp'>
-                                <Button color='inherit' style={{ color: 'black' }}>OTP</Button>
+                                <Button color='inherit' style={{ color: 'black' }}>Map</Button>
                             </Link>
                         </>
                     )}

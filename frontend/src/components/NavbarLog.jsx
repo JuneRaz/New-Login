@@ -31,11 +31,8 @@ function Home() {
                   Flood Monitoring System
                 </Link>
               </Typography>
-              <Link to='/Home'>
+              <Link to='/home'>
                 <Button color='inherit' style={{color:'inherit'}}>Home</Button>
-              </Link>
-              <Link to='/map'>
-                <Button color='inherit' style={{color:'inherit'}}>Map</Button>
               </Link>
             </Toolbar>
           </AppBar>

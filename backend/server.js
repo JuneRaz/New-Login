@@ -11,6 +11,7 @@ const { logger } = require('./middleware/logEvents');
 const cookieParser = require('cookie-parser');
 const credentials = require('./middleware/credentials');
 const userRouter = require('./routes/userRoutes');
+const setdeviceRouter = require('./routes/setdeviceRoutes');
 
 
 
@@ -26,7 +27,7 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 
 app.use('/', require('./routes/root'));
 app.use('/refresh', require('./routes/refresh'));
-
+app.use(setdeviceRouter);
 app.use(userRouter);
 app.use('/reset', require('./routes/authRes'));
 app.use('/auth', require('./routes/auth'));

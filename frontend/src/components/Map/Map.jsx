@@ -6,6 +6,9 @@ import lowIcon from './icons/gps(1).png';
 import mediumIcon from './icons/gps(2).png';
 import highIcon from './icons/gps(3).png';
 import extremeIcon from './icons/gps(4).png';
+import Test from '../Test';
+
+
 
 export const MarkerContext = React.createContext();
 export const LevelContext = React.createContext();
@@ -28,21 +31,27 @@ const initposition = {
   lng:123.89366616608562
 }
 
+
 export const MapContainer = (props) => {
-    const [markers, setMarkers] = useState([]);
-    const [poptext, setPoptext] = useState('');
-    useEffect(() => {
-      console.log('poptext has changed:', poptext);
-    }, [poptext]);
+  const [markers, setMarkers] = useState([]);
+  const [poptext, setPoptext] = useState('');
+  const [lattitude, SetLattitude]=useState();
+  const [longitude, SetLongitude]=useState();
   
+  const handlePosition =(position) => {
+    SetLattitude(position.lat());
+    SetLongitude(position.lng());
+    console.log(lattitude, " ", longitude)
+  }
     return (
-      <Map 
-      style={mapStyles}
+      <div>
+      <Map style={mapStyles}
       google={props.google}
       zoom={14}
-        initialCenter={initposition}
-        
-        >   
+      initialCenter={initposition}
+      onClick={(mapProps, map, clickEvent) => {
+        handlePosition(clickEvent.latLng)
+      }}>   
         <LevelContext.Provider value= {[poptext, setPoptext]}>
           <MarkerContext.Provider value= {[markers, setMarkers]}>
           <LevelButtons />
@@ -58,7 +67,15 @@ export const MapContainer = (props) => {
             }}
             />
           ))}
+        <Test lat={lattitude} lng= {longitude}/>
+           <Marker
+            position={{ lat: lattitude, lng: longitude }}
+            icon={{
+              url: markerIcons['High'],
+              scaledSize: new window.google.maps.Size(30, 30)
+            }}/>
         </Map>
+        </div>
     );
 }
 

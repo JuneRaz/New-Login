@@ -8,7 +8,7 @@ const RequireNoAuth = () => {
 
     // If the user is authenticated, redirect to the homepage or any other page
     return auth?.user
-        ? <Navigate to="/home" state={{ from: location }} replace />
+        ? <Navigate to="/" state={{ from: location }} replace />
         : <Outlet />;
 };
 

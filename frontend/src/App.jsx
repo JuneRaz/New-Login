@@ -60,18 +60,14 @@ function App() {
                 <Route exact path="/test" element={<Test />} /> // Use the correct component name
                 <Route exact path="/signup" element={<RegistrationForm/>} /> 
                 <Route exact path ="/signup/signupotp" element= {<RegistrationOtp/>}/>
-                <Route path="Login" element={<Login />} />
+                <Route path="/" element={<Login />} />
                 </Route>
 
 
                 <Route element={<PersistLogin />}>
 
                 <Route element={<RequireAuth allowedRoles={[1994, 2001]}/>}>
-                <Route exact path="/Home" element={<Home />} /> 
-                </Route>
-
-                <Route element={<RequireAuth allowedRoles={[1994, 2001]}/>}>
-                <Route exact path ='/map' element ={<MapContainer />}/>
+                <Route exact path="/Home" element={<MapContainer />} /> 
                 </Route>
 
                 <Route element={<RequireAuth allowedRoles={[1994]}/>}>
