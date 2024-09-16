@@ -8,13 +8,20 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MuiOtpInput } from 'mui-one-time-password-input'
 
+const toast_style= {
+  position: 'bottom-right',
+  closeOnClick: true,
+  pauseOnHover: true
+}
 const validateOtp = async (otp, form, nav) => {
   try {
     const response = await axios.post(`http://localhost:7000/validateotp/${otp}`, form);
-    toast.success('OTP verified successfully! Redirecting to login...');
-    setTimeout(() => {
-      nav('/', { replace: true });
-    }, 2000); // Adjust the delay time as necessary
+    if (response.status === 200) {
+      toast.success(response.data.message, toast_style);
+       setTimeout(() => { nav('/', { replace: true });}, 2000);
+    } else {
+      toast.error(response.data.message, toast_style); 
+    }
   } catch (error) {
     toast.error('OTP verification failed. Please try again.');
     console.error(error);
@@ -27,6 +34,12 @@ const RegistrationOtp = () => {
   const formData = location.state.formData;
 
   const [otp, setOtp] = useState('')
+
+  useEffect(() => {
+    if (otp.length === 6) {
+      validateOtp(otp, formData, navigate);
+    }
+  }, [otp, formData, navigate]);
 
   const handleChange = (newValue) => {
     setOtp(newValue)
@@ -71,17 +84,19 @@ const RegistrationOtp = () => {
       <Paper elevation={10} style={paperStyle}>
         <div>
           <h5>We've sent a One-Time Password to the contact number you've provided</h5>
-          {showTimer && <OtpTimer seconds={10} resend={() => handleResend(true)} text="Resending OTP in ..." />}
+
+          <div style ={{borderRadius: "7%"}}>
+            {showTimer && <OtpTimer seconds={10} resend={() => handleResend(true)} textColor= {"#000000"} background={"#00ccff"} text="Resending OTP in ..." />}
+          </div>
           <br />
-          <MuiOtpInput value={otp} onChange={handleChange} length={6}/>
+          <MuiOtpInput value= {otp} onChange={handleChange} length={6}/>
             <br />
             <Grid container justifyContent="center">
             <Button onClick={() =>validateOtp(otp, formData, navigate)}sx={{backgroundColor: "#00ccff"}} variant="contained">Submit</Button>
             </Grid>
-          
         </div>
       </Paper>
-      <ToastContainer />
+      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false}closeOnClick/>
     </Grid>
   );
 };
