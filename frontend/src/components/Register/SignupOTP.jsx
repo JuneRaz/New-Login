@@ -84,15 +84,11 @@ const RegistrationOtp = () => {
       <Paper elevation={10} style={paperStyle}>
         <div>
           <h5>We've sent a One-Time Password to the contact number you've provided</h5>
-
-          <div style ={{borderRadius: "7%"}}>
-            {showTimer && <OtpTimer seconds={10} resend={() => handleResend(true)} textColor= {"#000000"} background={"#00ccff"} text="Resending OTP in ..." />}
-          </div>
           <br />
           <MuiOtpInput value= {otp} onChange={handleChange} length={6}/>
             <br />
             <Grid container justifyContent="center">
-            <Button onClick={() =>validateOtp(otp, formData, navigate)}sx={{backgroundColor: "#00ccff"}} variant="contained">Submit</Button>
+            {showTimer && <OtpTimer seconds={10} resend={() => handleResend(true)} textColor= {"#000000"} background={"#00ccff"} text="Resending OTP in ..." />}
             </Grid>
         </div>
       </Paper>
