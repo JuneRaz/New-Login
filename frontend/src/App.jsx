@@ -17,7 +17,6 @@ import RequireNoAuth from './components/Login/RequireNoAuth';
 
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Navbar from './components/Navbar';
 import Test from './components/Test';
 //import MapContainer from '../../../../webpages/Flood-monitoring-system/client/src/components/Map/Map';
 import MapContainer from './components/Map/Map';
@@ -51,7 +50,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-          <Navbar />
             <div className="content">
             <Routes>
             <Route path="reset" element={<Reset />} />
