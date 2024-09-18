@@ -7,6 +7,7 @@ import mediumIcon from './icons/gps(2).png';
 import highIcon from './icons/gps(3).png';
 import extremeIcon from './icons/gps(4).png';
 import Test from '../Test';
+import Navbar from '../Navbar';
 
 
 
@@ -46,6 +47,7 @@ export const MapContainer = (props) => {
   }
     return (
       <div>
+        <Navbar/> 
       <Map style={mapStyles}
       google={props.google}
       zoom={14}
